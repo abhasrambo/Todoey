@@ -12,7 +12,7 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = [Items]()
     
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +28,9 @@ class TodoListViewController: UITableViewController {
         let newItem3 = Items()
            newItem3.title = "testDataOne"
            itemArray.append(newItem3)
-        if let items = defaults.array(forKey: "ToDoListArray") as? [Items] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "ToDoListArray") as? [Items] {
+//            itemArray = items
+//        }
         // Do any additional setup after loading the view.
     }
 
@@ -70,7 +70,16 @@ class TodoListViewController: UITableViewController {
             let newItem = Items()
             newItem.title = textField.text!
             self.itemArray.append(newItem)
-            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+            
+            let encoder = PropertyListEncoder()
+            do {
+                let data = try encoder.encode(self.itemArray)
+                try data.write(to: self.dataFilePath!)
+            } catch{
+                print(error)
+            }
+            
+            
             self.tableView.reloadData()
             
         }
