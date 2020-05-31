@@ -25,7 +25,7 @@ class TodoListViewController: UITableViewController {
 //        }
         // Do any additional setup after loading the view.
         
-       // loadItems()
+        loadItems()
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,16 +88,13 @@ class TodoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-//    func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//               itemArray = try decoder.decode([Items].self, from: data)
-//            } catch {
-//                print(error)
-//            }
-//
-//        }
-//    }
+    func loadItems() {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+          itemArray = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+    }
 }
 
