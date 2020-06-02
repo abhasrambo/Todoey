@@ -74,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="947.82608695652186" y="109.82142857142857"/>
         </scene>
-        <!--Todo Lists-->
+        <!--Todo Category-->
         <scene sceneID="9vA-SX-YnG">
             <objects>
                 <tableViewController id="89o-hT-aDW" customClass="CategoryViewController" customModule="Todo" customModuleProvider="target" sceneMemberID="viewController">
@@ -97,7 +97,7 @@
                             <outlet property="delegate" destination="89o-hT-aDW" id="yyq-PP-gWt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todo Lists" id="xeL-fN-9Fm">
+                    <navigationItem key="navigationItem" title="Todo Category" id="xeL-fN-9Fm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QsW-No-eK6">
                             <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <connections>

@@ -49,6 +49,14 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            context.delete(category[indexPath.row]  as NSManagedObject)
+            category.remove(at: indexPath.row)
+            saveItems()
+        }
+    }
+    
     //MARK:- Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
