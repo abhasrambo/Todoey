@@ -101,7 +101,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QsW-No-eK6">
                             <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <connections>
-                                <action selector="addButton:" destination="89o-hT-aDW" id="ejb-9P-8gu"/>
+                                <action selector="addButton:" destination="89o-hT-aDW" id="GTH-rC-uY3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
