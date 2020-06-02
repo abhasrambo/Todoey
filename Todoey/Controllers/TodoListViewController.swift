@@ -47,6 +47,17 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("Deleted")
+            self.itemArray.remove(at: indexPath.row)
+            context.delete(itemArray[indexPath.row])
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+
+            saveItems()
+        }
+    }
+    
    //MARK: - Tabel View delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
@@ -109,8 +120,6 @@ class TodoListViewController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
-    
 }
 
 //MARK:- Extension for UISearchBarDelegate(Search bar Methods)
