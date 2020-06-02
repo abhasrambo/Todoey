@@ -50,10 +50,12 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("Deleted")
-            self.itemArray.remove(at: indexPath.row)
-            context.delete(itemArray[indexPath.row])
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-
+//            self.itemArray.remove(at: indexPath.row)
+//            context.delete(itemArray[indexPath.row])
+//            itemArray.remove(at: indexPath.row)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            context.delete(itemArray[indexPath.row] as NSManagedObject)
+            itemArray.remove(at: indexPath.row)
             saveItems()
         }
     }
@@ -74,12 +76,15 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //What happens when user will click one user taps on ADD ITEM on UIAlert
             let newItem = Item(context: self.context)
-            newItem.title = textField.text!
-            newItem.done = false
-            newItem.parentCategory = self.selectedCategory
-            self.itemArray.append(newItem)
-            self.saveItems()
-            
+            if textField.text!.isEmpty{
+                return
+            } else {
+                newItem.title = textField.text!
+                newItem.done = false
+                newItem.parentCategory = self.selectedCategory
+                self.itemArray.append(newItem)
+                self.saveItems()
+            }
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter New Todo Here"
