@@ -7,15 +7,18 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
+    
+    let realm = try! Realm()
+    
     var category = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadItems()
+        //loadItems()
 
     }
 
@@ -24,10 +27,10 @@ class CategoryViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Category ToDo Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             //What happens when user will click one user taps on ADD ITEM on UIAlert
-            let newItem = Category(context: self.context)
-            newItem.name = textField.text!
-            self.category.append(newItem)
-            self.saveItems()
+            let newCategory = Category()
+            newCategory.name = textField.text!
+            self.category.append(newCategory)
+            self.save(category: newCategory)
             
     }
             alert.addTextField { (alertTextField) in
@@ -49,13 +52,13 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            context.delete(category[indexPath.row]  as NSManagedObject)
-            category.remove(at: indexPath.row)
-            saveItems()
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            context.delete(category[indexPath.row]  as NSManagedObject)
+//            category.remove(at: indexPath.row)
+//            saveCategory()
+//        }
+//}
     
     //MARK:- Tableview Delegate Methods
     
@@ -71,9 +74,11 @@ class CategoryViewController: UITableViewController {
     }
     //MARK:- Tabelview Manupulation Methods
     
-     func saveItems() {
+    func save(category: Category) {
                        do {
-                       try context.save()
+                        try realm.write{
+                            realm.add(category)
+                        }
                        } catch{
                            print(error)
                        }
@@ -82,16 +87,12 @@ class CategoryViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        func loadItems(with request : NSFetchRequest<Category> = Category.fetchRequest()) {
-            do {
-              category = try context.fetch(request)
-            } catch {
-                print(error)
-            }
-            tableView.reloadData()
-        }
-        
-        
-    
-    
-}
+//        func loadItems(with request : NSFetchRequest<Category> = Category.fetchRequest()) {
+//            do {
+//              category = try context.fetch(request)
+//            } catch {
+//                print(error)
+//            }
+//            tableView.reloadData()
+//        }
+   }
