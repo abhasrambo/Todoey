@@ -13,12 +13,12 @@ class CategoryViewController: UITableViewController {
     
     let realm = try! Realm()
     
-    var category = [Category]()
+    var category: Results<Category>?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //loadItems()
+        loadCategories()
 
     }
 
@@ -29,7 +29,6 @@ class CategoryViewController: UITableViewController {
             //What happens when user will click one user taps on ADD ITEM on UIAlert
             let newCategory = Category()
             newCategory.name = textField.text!
-            self.category.append(newCategory)
             self.save(category: newCategory)
             
     }
@@ -43,12 +42,12 @@ class CategoryViewController: UITableViewController {
     
     //MARK:- Tableview datasource methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return category.count
+        return category?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        cell.textLabel?.text = category[indexPath.row].name
+        cell.textLabel?.text = category?[indexPath.row].name ?? "No Categoriesa added yet"
         return cell
     }
     
@@ -69,7 +68,7 @@ class CategoryViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TodoListViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = category[indexPath.row]
+            destinationVC.selectedCategory = category?[indexPath.row]
         }
     }
     //MARK:- Tabelview Manupulation Methods
@@ -87,12 +86,9 @@ class CategoryViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-//        func loadItems(with request : NSFetchRequest<Category> = Category.fetchRequest()) {
-//            do {
-//              category = try context.fetch(request)
-//            } catch {
-//                print(error)
-//            }
-//            tableView.reloadData()
-//        }
+    func loadCategories(){
+        category = realm.objects(Category.self)
+        tableView.reloadData()
+        
+        }
    }
