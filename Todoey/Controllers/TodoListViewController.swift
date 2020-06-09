@@ -61,6 +61,15 @@ class TodoListViewController: UITableViewController {
     
     //MARK: - Tabel View delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let item = todoItems?[indexPath.row] {
+            do {
+                try realm.write{
+                    item.done = !item.done
+                }
+            } catch {
+                print(error)
+            }
+        }
         //print(itemArray[indexPath.row])
         //        todoItems[indexPath.row].done = !todoItems[indexPath.row].done
         //        saveItems()
@@ -81,13 +90,13 @@ class TodoListViewController: UITableViewController {
                         if textField.text!.isEmpty{
                             return
                         } else {
-                                    newItem.title = textField.text!
-                                    currentCategory.items.append(newItem)
-                            }
+                            newItem.title = textField.text!
+                            currentCategory.items.append(newItem)
+                        }
                     }
                 } catch {print(error)}
                 
-                }
+            }
             self.tableView.reloadData()}
         
         alert.addTextField { (alertTextField) in
