@@ -147,8 +147,11 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
                         do{
                             try self.realm.write{
                                 if let newItem = self.todoItems?[indexPath.row] {
-                                    newItem.title = textField.text!
-
+                                    if textField.text! == ""{
+                                        return
+                                    } else {
+                                        newItem.title = textField.text!
+                                    }
                                 }
                             }
                         } catch {print(error)}

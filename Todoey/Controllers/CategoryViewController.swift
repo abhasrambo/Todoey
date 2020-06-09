@@ -116,7 +116,11 @@ class CategoryViewController: UITableViewController, UIGestureRecognizerDelegate
                             do{
                                 try self.realm.write{
                                     if let newCategory = self.category?[indexPath.row] {
-                                        newCategory.name = textField.text!
+                                        if textField.text! == ""{
+                                            return
+                                        } else {
+                                            newCategory.name = textField.text!
+                                        }
 
                                     }
                                 }
