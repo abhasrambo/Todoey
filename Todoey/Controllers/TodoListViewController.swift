@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     var todoItems : Results<Item>?
     
@@ -25,7 +25,7 @@ class TodoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupLongPressGesture()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
     }
@@ -50,19 +50,19 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
-        override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            if editingStyle == .delete {
-                print("Deleted")
-                if let item = todoItems?[indexPath.row] {
-                    do {
-                        try realm.write{
-                            realm.delete(item)
-                        }
-                    } catch {print(error)}
-                }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("Deleted")
+            if let item = todoItems?[indexPath.row] {
+                do {
+                    try realm.write{
+                        realm.delete(item)
+                    }
+                } catch {print(error)}
             }
-            tableView.reloadData()
         }
+        tableView.reloadData()
+    }
     
     //MARK: - Tabel View delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -109,7 +109,7 @@ class TodoListViewController: UITableViewController {
             textField = alertTextField
         }
         alert.addAction(action)
-         present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     //MARK - Model Manipulation Methods
@@ -130,6 +130,41 @@ class TodoListViewController: UITableViewController {
     func loadItems() {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
+    }
+    
+    func setupLongPressGesture() {
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        longPressGesture.minimumPressDuration = 1.0 // 1 second press
+        longPressGesture.delegate = self
+        self.tableView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: self.tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                var textField = UITextField()
+                let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Edit Item", style: .default) { (action) in
+                    //What happens when user will click one user taps on ADD ITEM on UIAlert
+                        do{
+                            try self.realm.write{
+                                if let newItem = self.todoItems?[indexPath.row] {
+                                    newItem.title = textField.text!
+
+                                }
+                            }
+                        } catch {print(error)}
+                    self.tableView.reloadData()}
+                
+                alert.addTextField { (alertTextField) in
+                    alertTextField.placeholder = "Enter New Todo Here"
+                    textField = alertTextField
+                }
+                alert.addAction(action)
+                present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 

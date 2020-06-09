@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     let realm = try! Realm()
     
@@ -19,6 +19,7 @@ class CategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
+        setupLongPressGesture()
 
     }
 
@@ -96,4 +97,40 @@ class CategoryViewController: UITableViewController {
         tableView.reloadData()
         
         }
-   }
+    
+    func setupLongPressGesture() {
+            let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+            longPressGesture.minimumPressDuration = 1.0 // 1 second press
+            longPressGesture.delegate = self
+            self.tableView.addGestureRecognizer(longPressGesture)
+        }
+        
+        @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+            if gestureRecognizer.state == .began {
+                let touchPoint = gestureRecognizer.location(in: self.tableView)
+                if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                    var textField = UITextField()
+                    let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Edit Category", style: .default) { (action) in
+                        //What happens when user will click one user taps on ADD ITEM on UIAlert
+                            do{
+                                try self.realm.write{
+                                    if let newCategory = self.category?[indexPath.row] {
+                                        newCategory.name = textField.text!
+
+                                    }
+                                }
+                            } catch {print(error)}
+                        self.tableView.reloadData()}
+                    
+                    alert.addTextField { (alertTextField) in
+                        alertTextField.placeholder = "Enter New Todo Here"
+                        textField = alertTextField
+                    }
+                    alert.addAction(action)
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+
