@@ -51,13 +51,18 @@ class CategoryViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            context.delete(category[indexPath.row]  as NSManagedObject)
-//            category.remove(at: indexPath.row)
-//            saveCategory()
-//        }
-//}
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if let categoryDelete = category?[indexPath.row] {
+                do{
+                    try realm.write{
+                        realm.delete(categoryDelete)
+                    }
+                } catch {print(error)}
+            }
+        }
+        tableView.reloadData()
+}
     
     //MARK:- Tableview Delegate Methods
     

@@ -50,14 +50,19 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
-    //    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    //        if editingStyle == .delete {
-    //            print("Deleted")
-    //            context.delete(itemArray[indexPath.row] as NSManagedObject)
-    //            itemArray.remove(at: indexPath.row)
-    //            saveItems()
-    //        }
-    //    }
+        override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            if editingStyle == .delete {
+                print("Deleted")
+                if let item = todoItems?[indexPath.row] {
+                    do {
+                        try realm.write{
+                            realm.delete(item)
+                        }
+                    } catch {print(error)}
+                }
+            }
+            tableView.reloadData()
+        }
     
     //MARK: - Tabel View delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -104,7 +109,7 @@ class TodoListViewController: UITableViewController {
             textField = alertTextField
         }
         alert.addAction(action)
-        // present(alert, animated: true, completion: nil)
+         present(alert, animated: true, completion: nil)
     }
     
     //MARK - Model Manipulation Methods
