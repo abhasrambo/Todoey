@@ -67,6 +67,34 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
         tableView.reloadData()
     }
     
+    override func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+
+        let closeAction = UIContextualAction(style: .normal, title:  "Strike item", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            print("CloseAction ...")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+            if let item = self.todoItems?[indexPath.row] {
+               //cell.textLabel?.text = item.title
+               //cell.accessoryType = item.done ? .checkmark: .none
+               let attributes: [NSAttributedString.Key: Any] =
+                   [NSAttributedString.Key.strikethroughStyle: 1]
+                
+                do {
+                    try self.realm.write{
+                        item.done = !item.done
+                    }
+                } catch {print(error)}
+               cell.textLabel?.attributedText = item.done ? NSAttributedString(string: item.title, attributes: attributes): NSAttributedString(string: item.title)
+           }
+            success(true)
+        })
+        closeAction.backgroundColor = .blue
+        tableView.reloadData()
+        return UISwipeActionsConfiguration(actions: [closeAction])
+
+    }
+    
     //MARK: - Tabel View delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = todoItems?[indexPath.row] {

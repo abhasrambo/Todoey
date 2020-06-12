@@ -25,7 +25,7 @@
 		4E8A5B4024856B7C002AF3DF /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		4E8C8952248C316A008E85C3 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4E8C8956248C3205008E85C3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		EB2BE4F6239524DB00FB933B /* Todo-Realm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Todo-Realm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB2BE4F6239524DB00FB933B /* Todo Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Todo Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE4F9239524DB00FB933B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB2BE4FD239524DB00FB933B /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		EB2BE500239524DB00FB933B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		EB2BE4F7239524DB00FB933B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EB2BE4F6239524DB00FB933B /* Todo-Realm.app */,
+				EB2BE4F6239524DB00FB933B /* Todo Book.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,7 +140,7 @@
 			);
 			name = "Todo-Realm";
 			productName = Todoey;
-			productReference = EB2BE4F6239524DB00FB933B /* Todo-Realm.app */;
+			productReference = EB2BE4F6239524DB00FB933B /* Todo Book.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -394,7 +394,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.abhas.TodoListRealm.TodoListRealm;
-				PRODUCT_NAME = "Todo-Realm";
+				PRODUCT_NAME = "Todo Book";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -414,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.abhas.TodoListRealm.TodoListRealm;
-				PRODUCT_NAME = "Todo-Realm";
+				PRODUCT_NAME = "Todo Book";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
