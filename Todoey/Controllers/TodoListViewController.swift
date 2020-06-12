@@ -41,8 +41,11 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         if let item = todoItems?[indexPath.row] {
-            cell.textLabel?.text = item.title
-            cell.accessoryType = item.done ? .checkmark: .none
+            //cell.textLabel?.text = item.title
+            //cell.accessoryType = item.done ? .checkmark: .none
+            let attributes: [NSAttributedString.Key: Any] =
+                [NSAttributedString.Key.strikethroughStyle: 1]
+            cell.textLabel?.attributedText = item.done ? NSAttributedString(string: item.title, attributes: attributes): NSAttributedString(string: item.title)
         } else {
             cell.textLabel?.text = "No Items Added"
         }
