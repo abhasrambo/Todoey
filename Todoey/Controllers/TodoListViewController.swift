@@ -189,6 +189,7 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
                     self.tableView.reloadData()}
                 
                 alert.addTextField { (alertTextField) in
+                    alertTextField.text = self.todoItems?[indexPath.row].title
                     alertTextField.placeholder = "Enter New Todo Here"
                     textField = alertTextField
                 }
