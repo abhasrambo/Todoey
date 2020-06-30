@@ -110,7 +110,7 @@ class CategoryViewController: UITableViewController, UIGestureRecognizerDelegate
                 let touchPoint = gestureRecognizer.location(in: self.tableView)
                 if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                     var textField = UITextField()
-                    let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Edit this Category", message: "", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Edit Category", style: .default) { (action) in
                         //What happens when user will click one user taps on ADD ITEM on UIAlert
                             do{
@@ -128,7 +128,7 @@ class CategoryViewController: UITableViewController, UIGestureRecognizerDelegate
                         self.tableView.reloadData()}
                     
                     alert.addTextField { (alertTextField) in
-                        alertTextField.placeholder = "Enter New Todo Here"
+                        alertTextField.placeholder = "Enter updated category here"
                         textField = alertTextField
                     }
                     alert.addAction(action)

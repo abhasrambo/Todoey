@@ -172,7 +172,7 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
             let touchPoint = gestureRecognizer.location(in: self.tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 var textField = UITextField()
-                let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Edit this ToDo Item", message: "", preferredStyle: .alert)
                 let action = UIAlertAction(title: "Edit Item", style: .default) { (action) in
                     //What happens when user will click one user taps on ADD ITEM on UIAlert
                         do{
@@ -190,7 +190,7 @@ class TodoListViewController: UITableViewController, UIGestureRecognizerDelegate
                 
                 alert.addTextField { (alertTextField) in
                     alertTextField.text = self.todoItems?[indexPath.row].title
-                    alertTextField.placeholder = "Enter New Todo Here"
+                    alertTextField.placeholder = "Enter updated Todo Here"
                     textField = alertTextField
                 }
                 alert.addAction(action)
