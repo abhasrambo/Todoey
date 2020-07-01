@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Destini
+//  Todo-Realm
 //
-//  Created by Philipp Muellauer on 01/09/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
+//  Created by Abhas Kumar on 6/6/20.
+//  Copyright © 2020 App Brewery. All rights reserved.
 //
 
 import UIKit
