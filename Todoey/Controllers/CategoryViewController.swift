@@ -29,9 +29,13 @@ class CategoryViewController: UITableViewController, UIGestureRecognizerDelegate
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             //What happens when user will click one user taps on ADD ITEM on UIAlert
             let newCategory = Category()
-            newCategory.name = textField.text!
-            self.save(category: newCategory)
-            
+            if textField.text!.isEmpty{
+                return
+            } else {
+                newCategory.name = textField.text!
+                self.save(category: newCategory)
+            }
+
     }
             alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter New Category Here"
